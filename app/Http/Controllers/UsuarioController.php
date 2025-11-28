@@ -42,6 +42,8 @@ class UsuarioController extends Controller
 
         $user = Usuario::create($request->all());
         $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->route('bienvenida');
        /* $usuario = new Usuario();
         $usuario->nombre = $request->nombre;
         $usuario->apellido = $request->apellido;

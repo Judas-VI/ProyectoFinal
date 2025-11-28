@@ -16,7 +16,7 @@
                 type="text"
                 id="nombre"
                 name="nombre"
-                value= "{{ old('nombre') }}" >
+                >
             @error('nombre')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -26,8 +26,8 @@
                 class="form-control"
                 type="text"  
                 id="apellido" 
-                name="descripcion"
-                value=" {{ old('descripcion') }}" >
+                name="apellido"
+                >
             @error('apellido')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
@@ -38,7 +38,7 @@
                 type="email"  
                 id="email" 
                 name="email"
-                value=" {{ old('email') }}" >
+                 >
             @error('email')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
