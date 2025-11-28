@@ -32,7 +32,7 @@
                     </ul>
                     <!--Login-->
                     <div class="d-flex flex-colum  justify-content-center aling-items-center gap-3">
-                        <a href="login" class="text-white text-decoration-none px-3 py-1 rounded-4"
+                        <a href="{{ route('usuario-login-vista') }}" class="text-white text-decoration-none px-3 py-1 rounded-4"
                             style="background-color: #c84cf9;">Login</a>
                         <a href=" {{ route('usuario.create') }} "
                             class="text-white text-decoration-none px-3 py-1 rounded-4"

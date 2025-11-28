@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+//use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+
 
 class UsuarioController extends Controller
 {
@@ -81,5 +84,30 @@ class UsuarioController extends Controller
     public function destroy(Usuario $usuario)
     {
         //
+    }
+
+    public function obtenerVista()
+    {
+        return view('vistaDeRutas.login-usuario');
+    }
+
+    public function usuariologin(Request $request)
+    {
+        $credenciales = $request->validate([
+            'email' => ['required','email'],
+            'password' => ['required'],
+        ]);
+
+        if(Auth::attempt($credenciales)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended('landing');
+        } 
+        else{
+            return back()->withErrors([
+                'email' => 'El email proporcionado es incorrecto.'
+            ])->onlyInput('email');
+        }
+
     }
 }
