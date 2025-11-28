@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
@@ -20,7 +21,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //
+        return view('vistaDeRutas.crear-usuario');
     }
 
     /**
@@ -28,7 +29,26 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|max:20',
+            'apellido' => 'required|max:30',
+            'email' => 'required|max:60',
+            'password' => [
+                'required',
+                'min:8',
+                'max:12'
+            ],
+        ]);
+
+        $user = Usuario::create($request->all());
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->route('bienvenida');
+       /* $usuario = new Usuario();
+        $usuario->nombre = $request->nombre;
+        $usuario->apellido = $request->apellido;
+        $usuario->email = $request->email;
+        $usuario->password = Hash::make($request->password);*/
     }
 
     /**

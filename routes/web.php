@@ -20,6 +20,8 @@ Route::resource('pivote_stock_carrito',PivoteStockCarritoController::class);
 Route::resource('stock',StockController::class);
 Route::resource('usuario', UsuarioController::class);
 
+Route::view('\bienvenida','landing')->name('bienvenida');
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
