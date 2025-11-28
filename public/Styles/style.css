@@ -1,14 +1,23 @@
-body{
-    background: url('/Imagenes/fondo2.jpg') rgba(0, 0, 0, 0.3);
-    background-blend-mode: multiply;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
 @media(max-width: 991px){
     .sidebar{
         background-color: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
     }
     
+}
+body.fondo-usuario {
+    background: url('/Imagenes/fondo-usuario.jpg'), rgba(0, 0, 0, 0.3);
+    background-blend-mode: multiply;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: auto;
+}
+
+body.fondo-landing {
+    background: url('/Imagenes/fondo2.jpg'), rgba(0, 0, 0, 0.3);
+    background-blend-mode: multiply;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }

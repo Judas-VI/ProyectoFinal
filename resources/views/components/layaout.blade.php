@@ -12,18 +12,11 @@
   <title>CondonPlex | Welcome</title>
 </head>
 
-<body class="vh-100 overflow-hidden">
+<body {{ $attributes->merge(['class' => '']) }}>
 
   <!-- Navbarr-->
     {{ $slot }}
 
-
-<main>
-  <section class="w-100 vh-100 d-flex flex-column justify-content-center align-items-center text-white fs-1">
-    <h1 style="font-size: 1.5em">Me quiero</h1>
-    <h1 style="font-size: 1.3em">Matar</h1>
-</section>
-</main>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
