@@ -32,18 +32,19 @@ class StockController extends Controller
     {
         $validated = $request->validate([
             'precio' => 'required|numeric|min:0',
-            'nombre_stock' => 'required|string|max:255',
+            'nombre_stock' => 'required|string|max:20',
             'fecha_creacion' => 'required|date',
-            'descripcion' => 'required|string',
+            'descripcion' => 'required|string|max:200',
             'stock' => 'required|integer|min:0',
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
         ]);
+
         if ($request->hasFile('img')) {
             $imagePath = $request->file('img')->store('stocks', 'public');
-            $validatedData['img'] = $imagePath;
+            $validated['img'] = $imagePath;
         }
-        $stock = Stock::create($validated);
-        return redirect()->route('stock.store');
+        Stock::create($validated);
+        return redirect()->route('stock.index')->with('success', 'Producto de stock creado con éxito.');
     }
 
     /**
@@ -51,7 +52,7 @@ class StockController extends Controller
      */
     public function show(Stock $stock)
     {
-        return view('viewStock.listar-stock')->with(['stock' => $stock]);
+        return view('viewStock.show-stock')->with(['stock' => $stock]);
     }
 
     /**

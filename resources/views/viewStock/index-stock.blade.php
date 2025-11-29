@@ -20,7 +20,7 @@
                             </h4>
                             
                             <p class="card-text text-muted small flex-grow-1">
-                                {{ Str::limit($stock->descripcion, 75) }}
+                                {{ Str::limit($stock->descripcion, 15) }}...<br>
                             </p>
                             
                             <ul class="list-group list-group-flush mb-3">
@@ -36,7 +36,7 @@
                             </ul>
                             
                             <div class="mt-auto d-grid">
-                                <a href="{{ route('stock.show', $stock) }}" class="btn btn-outline-dark">Ver Detalles</a>
+                                <a href="{{ route('stock.show', $stock->id) }}" class="btn btn-dark">Ver Detalles</a>
                             </div>
                         </div>
                     </div>
@@ -45,8 +45,7 @@
             </div>
         
         @unless (count($stocks))
-            <p class="text-center mt-5 fs-5 text-muted">Aún no hay productos en stock. 
-                <a href="{{ route('stock.create') }}">¡Crea uno ahora!</a>
+            <p class="d-flex justify-content-center align-items-start pt-5 min-vh-100 p-3">Aún no hay productos en stock. 
             </p>
         @endunless
 
