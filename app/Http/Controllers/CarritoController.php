@@ -24,7 +24,7 @@ class CarritoController extends Controller
             }
         }
         $carritos = $usuarioId ? Carrito::where('usuario_id', $usuarioId)->with('stocks')->get() : collect();
-        return view('carritos.index', compact('carritos'));
+        return view('carrito.carrito-index', compact('carritos'));
     }
 
     /**
@@ -46,7 +46,6 @@ class CarritoController extends Controller
             'usuario_id' => 'sometimes|integer',
         ]);
 
-        // Resolve usuario_id: prefer matching Usuario record for the authenticated user
         $resolvedUsuarioId = null;
         if ($user = Auth::user()) {
             $usuario = Usuario::where('email', $user->email)->first();
@@ -57,7 +56,7 @@ class CarritoController extends Controller
             }
         }
 
-        // If no Usuario matched the authenticated user, allow explicit usuario_id from request
+        
         if (! $resolvedUsuarioId) {
             if (! empty($data['usuario_id'])) {
                 $exists = Usuario::where('id', $data['usuario_id'])->exists();
@@ -72,7 +71,7 @@ class CarritoController extends Controller
 
         $data['usuario_id'] = $resolvedUsuarioId;
         $carrito = Carrito::create($data);
-        return redirect()->route('carritos.show', $carrito)->with('success', 'Carrito creado exitosamente.');
+        return redirect()->route('carrito.show', $carrito)->with('success', 'Carrito creado exitosamente.');
     }
 
     /**
@@ -80,7 +79,7 @@ class CarritoController extends Controller
      */
     public function show(Carrito $carrito)
     {
-        //
+        return view('carrito.carrito-check', compact('carrito'));
     }
 
     /**
@@ -101,7 +100,7 @@ class CarritoController extends Controller
             'fecha_pedido' => 'sometimes|date',
         ]);
         $carrito->update($data);
-        return redirect()->route('carritos.show', $carrito)->with('success', 'Carrito actualizado exitosamente.');
+        return redirect()->route('carrito.show', $carrito)->with('success', 'Carrito actualizado exitosamente.');
     }
 
     /**
