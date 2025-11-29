@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\Validate;
 use Livewire\Volt\Exceptions\ReturnNewClassExecutionEndingException;
 
 class StockController extends Controller
@@ -13,7 +15,7 @@ class StockController extends Controller
      */
     public function index()
     {
-        $stocks = Stock::orderBy('nombre_stock')->get(); 
+        $stocks = Stock::orderBy('nombre_stock')->get();
         return view('viewStock.index-stock', compact('stocks'));
     }
 
@@ -36,7 +38,7 @@ class StockController extends Controller
             'fecha_creacion' => 'required|date',
             'descripcion' => 'required|string|max:200',
             'stock' => 'required|integer|min:0',
-            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($request->hasFile('img')) {
@@ -60,7 +62,7 @@ class StockController extends Controller
      */
     public function edit(Stock $stock)
     {
-        return view('')->with(['stock' => $stock]);
+        return view('viewStock.edit-stock')->with(['stock' => $stock]);
     }
 
     /**
@@ -68,9 +70,25 @@ class StockController extends Controller
      */
     public function update(Request $request, Stock $stock)
     {
-        $stock->update($request->all());
+        $validated = $request->validate([
+            'precio' => 'required|numeric|min:0',
+            'nombre_stock' => 'required|string|max:20',
+            'fecha_creacion' => 'required|date',
+            'descripcion' => 'required|string|max:200',
+            'stock' => 'required|integer|min:0',
+            'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-        return redirect()->route('', $stock->id);
+        if ($request->hasFile('img')) {
+
+            if ($stock->img) {
+                Storage::disk('public')->delete($stock->img);
+            }
+            $imagePath = $request->file('img')->store('stocks', 'public');
+            $validated['img'] = $imagePath;
+        }
+        $stock->update($validated);
+        return redirect()->route('stock.index')->with('success', 'Producto de stock modificado con éxito.');
     }
 
     /**
@@ -78,6 +96,10 @@ class StockController extends Controller
      */
     public function destroy(Stock $stock)
     {
-        //
+        if ($stock->img) {
+            Storage::disk('public')->delete($stock->img);
+        }
+        $stock->delete();
+        return redirect()->route('stock.index')->with('success', 'Producto de stock eliminado con éxito.');
     }
 }

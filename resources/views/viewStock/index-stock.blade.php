@@ -36,6 +36,12 @@
                             </ul>
                             
                             <div class="mt-auto d-grid">
+                                <a href="{{ route('stock.edit', $stock->id) }}" class="btn btn-dark">Editar</a>
+                                <form class="mt-auto d-grid" action="{{ route('stock.destroy', $stock->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger" type="submit">Eliminar</button>
+                                </form>
                                 <a href="{{ route('stock.show', $stock->id) }}" class="btn btn-dark">Ver Detalles</a>
                             </div>
                         </div>
