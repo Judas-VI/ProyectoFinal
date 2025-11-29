@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    ///--- es pal formato de pagojijiji ---///
+    'stripe' => [
+    'key' => env('STRIPE_KEY'),
+    'secret' => env('STRIPE_SECRET'),
+],
+
 ];

@@ -12,7 +12,16 @@
 		</div>
 
 		<div class="d-flex justify-content-between align-items-center mb-4">
-			<a href="{{ url('/menu') }}" class="btn btn-outline-secondary">eliminar carrito</a>
+			@php $primerCarrito = $carritos->first(); @endphp
+			@if(!empty($primerCarrito))
+			<form action="{{ route('carrito.destroy', $primerCarrito->id) }}" method="POST" onsubmit="return confirm('¿Eliminar este carrito y todos sus productos?');">
+				@csrf
+				@method('DELETE')
+				<button class="btn btn-outline-danger">Eliminar carrito</button>
+			</form>
+			@else
+			<a href="{{ url('/#') }}" class="btn btn-outline-secondary">Volver al menú</a>
+			@endif
 		</div>
 
 		@if(session('success'))
@@ -69,15 +78,15 @@
 		</div>
 
 		<div class="d-flex gap-2">
-			<a href="{{ url('/menu') }}" class="btn btn-secondary">Regresar al menu</a>
-			@php $firstCarrito = $carritos->first(); @endphp
-			<a href="{{ route('carrito.show', $firstCarrito->id) }}" class="btn btn-primary">Ir a pagar</a>
+			<a href="{{ url('/menu') }}" class="btn btn-secondary">Regresar al menú</a>
+			@php $primerCarrito = $carritos->first(); @endphp
+			<a href="{{ route('carrito.show', $primerCarrito->id) }}" class="btn btn-primary">Ir a pagar</a>
 		</div>
 		@else
 		<div class="card">
 			<div class="card-body text-center">
 			<p class="mb-3">Tu carrito está vacío.</p>
-			<a href="{{ url('/bienvenida') }}" class="btn btn-primary">Ir al menú</a>
+			<a href="{{ url('/#') }}" class="btn btn-primary">Ir al menú</a>
 			</div>
 		</div>
 		@endif
