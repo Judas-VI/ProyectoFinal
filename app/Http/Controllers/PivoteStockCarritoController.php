@@ -60,6 +60,12 @@ class PivoteStockCarritoController extends Controller
      */
     public function destroy(Pivote_stock_carrito $pivote_stock_carrito)
     {
-        //
+        // Eliminar la fila  que relaciona un stock con un carrito por id  
+        try {
+            $pivote_stock_carrito->delete();
+            return back()->with('success', 'Producto eliminado del carrito.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'No se pudo eliminar el producto del carrito.']);
+        }
     }
 }

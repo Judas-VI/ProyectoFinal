@@ -24,7 +24,7 @@ class CarritoController extends Controller
             }
         }
         $carritos = $usuarioId ? Carrito::where('usuario_id', $usuarioId)->with('stocks')->get() : collect();
-        return view('carrito.index', compact('carritos'));
+        return view('carrito.carrito-index', compact('carritos'));
     }
 
     /**
@@ -46,7 +46,6 @@ class CarritoController extends Controller
             'usuario_id' => 'sometimes|integer',
         ]);
 
-        // Resolve usuario_id: prefer matching Usuario record for the authenticated user
         $resolvedUsuarioId = null;
         if ($user = Auth::user()) {
             $usuario = Usuario::where('email', $user->email)->first();
@@ -57,7 +56,7 @@ class CarritoController extends Controller
             }
         }
 
-        // If no Usuario matched the authenticated user, allow explicit usuario_id from request
+        
         if (! $resolvedUsuarioId) {
             if (! empty($data['usuario_id'])) {
                 $exists = Usuario::where('id', $data['usuario_id'])->exists();
@@ -80,7 +79,7 @@ class CarritoController extends Controller
      */
     public function show(Carrito $carrito)
     {
-        //
+        return view('carrito.carrito-check', compact('carrito'));
     }
 
     /**
