@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Livewire\Volt\Exceptions\ReturnNewClassExecutionEndingException;
 
 class StockController extends Controller
 {
@@ -12,7 +13,8 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        $stocks = Stock::orderBy('nombre_stock')->get(); 
+        return view('viewStock.index-stock', compact('stocks'));
     }
 
     /**
@@ -20,7 +22,7 @@ class StockController extends Controller
      */
     public function create()
     {
-        //
+        return view('viewStock.crear-stock');
     }
 
     /**
@@ -28,7 +30,20 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'precio' => 'required|numeric|min:0',
+            'nombre_stock' => 'required|string|max:255',
+            'fecha_creacion' => 'required|date',
+            'descripcion' => 'required|string',
+            'stock' => 'required|integer|min:0',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
+        ]);
+        if ($request->hasFile('img')) {
+            $imagePath = $request->file('img')->store('stocks', 'public');
+            $validatedData['img'] = $imagePath;
+        }
+        $stock = Stock::create($validated);
+        return redirect()->route('stock.store');
     }
 
     /**
@@ -36,7 +51,7 @@ class StockController extends Controller
      */
     public function show(Stock $stock)
     {
-        //
+        return view('viewStock.listar-stock')->with(['stock' => $stock]);
     }
 
     /**
@@ -44,7 +59,7 @@ class StockController extends Controller
      */
     public function edit(Stock $stock)
     {
-        //
+        return view('')->with(['stock' => $stock]);
     }
 
     /**
@@ -52,7 +67,9 @@ class StockController extends Controller
      */
     public function update(Request $request, Stock $stock)
     {
-        //
+        $stock->update($request->all());
+
+        return redirect()->route('', $stock->id);
     }
 
     /**
