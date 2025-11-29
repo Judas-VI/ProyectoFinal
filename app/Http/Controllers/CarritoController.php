@@ -24,7 +24,7 @@ class CarritoController extends Controller
             }
         }
         $carritos = $usuarioId ? Carrito::where('usuario_id', $usuarioId)->with('stocks')->get() : collect();
-        return view('carritos.index', compact('carritos'));
+        return view('carrito.index', compact('carritos'));
     }
 
     /**
@@ -72,7 +72,7 @@ class CarritoController extends Controller
 
         $data['usuario_id'] = $resolvedUsuarioId;
         $carrito = Carrito::create($data);
-        return redirect()->route('carritos.show', $carrito)->with('success', 'Carrito creado exitosamente.');
+        return redirect()->route('carrito.show', $carrito)->with('success', 'Carrito creado exitosamente.');
     }
 
     /**
@@ -101,7 +101,7 @@ class CarritoController extends Controller
             'fecha_pedido' => 'sometimes|date',
         ]);
         $carrito->update($data);
-        return redirect()->route('carritos.show', $carrito)->with('success', 'Carrito actualizado exitosamente.');
+        return redirect()->route('carrito.show', $carrito)->with('success', 'Carrito actualizado exitosamente.');
     }
 
     /**
