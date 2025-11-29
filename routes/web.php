@@ -35,6 +35,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::resource('carrito',CarritoController::class);
+Route::post('carrito/{carrito}/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
 Route::resource('pago',PagoController::class);
 Route::resource('pivote_stock_carrito',PivoteStockCarritoController::class);
 Route::resource('stock',StockController::class);
