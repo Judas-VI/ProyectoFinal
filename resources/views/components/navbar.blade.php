@@ -3,7 +3,7 @@
         <div class="container">
             <!--Logo-->
             <img src="{{ asset('Imagenes/logo.png') }}" width="60px" alt="Logo">
-            <a class="navbar-brand fs-4 bg-black" href="#">CondonPlex.</a>
+            <a class="navbar-brand fs-4 bg-black" href="{{ route('bienvenida') }}">CondonPlex.</a>
             <!-- Toggle -->
             <button class="navbar-toggler shadow-none border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -17,7 +17,7 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                            <a class="nav-link active" aria-current="page" href="{{ route('bienvenida') }}">Inicio</a>
                         </li>
                         <li class="nav-item mx-2">
                             <a class="nav-link" href="#about">About</a>

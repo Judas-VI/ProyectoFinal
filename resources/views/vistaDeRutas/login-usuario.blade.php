@@ -1,4 +1,5 @@
-<x-layout>
+<x-layaout class="fondo-usuario overflow-auto">
+    <x-navbar/>
     <h1>Log in</h1>
     <form action="{{ route('usuario.login') }}" method="POST">
         @csrf
@@ -8,14 +9,22 @@
                 type="email"  
                 id="email" 
                 name="email"
+                value="{{ old('email') }}"
                 required>
+            @error('email')
+                <p class="text-danger">{{$message}}</p>
+            @enderror
 
             <label for="password">Contraseña</label>
             <input 
                 class="form-control"
                 type="password" 
                 name="password" 
-                id="password">
+                id="password"
+                required>
+            @error('password')
+                <p class="text-danger">{{$message}}</p>
+            @enderror
         <br>
         <button type="submit">Guardar</button>
     </form> <br>

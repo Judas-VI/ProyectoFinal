@@ -32,7 +32,7 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validarDatos = $request->validate([
             'nombre' => 'required|max:20',
             'apellido' => 'required|max:30',
             'email' => 'required|max:60',
@@ -42,16 +42,10 @@ class UsuarioController extends Controller
                 'max:12'
             ],
         ]);
+        $validarDatos['password'] = Hash::make($validarDatos['password']);
+        $usuario = Usuario::create($validarDatos);
 
-        $user = Usuario::create($request->all());
-        $user->password = Hash::make($request->password);
-        $user->save();
         return redirect()->route('bienvenida');
-       /* $usuario = new Usuario();
-        $usuario->nombre = $request->nombre;
-        $usuario->apellido = $request->apellido;
-        $usuario->email = $request->email;
-        $usuario->password = Hash::make($request->password);*/
     }
 
     /**
@@ -93,21 +87,23 @@ class UsuarioController extends Controller
 
     public function usuariologin(Request $request)
     {
-        $credenciales = $request->validate([
-            'email' => ['required','email'],
-            'password' => ['required'],
-        ]);
+        $credenciales = $request->only('email', 'password');
+        $usuario = \App\Models\Usuario::where('email', $credenciales['email'])->first();
 
-        if(Auth::attempt($credenciales)) {
-            $request->session()->regenerate();
-
-            return redirect()->intended('landing');
-        } 
-        else{
-            return back()->withErrors([
-                'email' => 'El email proporcionado es incorrecto.'
-            ])->onlyInput('email');
+        if ($usuario && Hash::check($credenciales['password'], $usuario->password)) {
+            Auth::guard('usuarios')->login($usuario);
+            return redirect()->intended(route('bienvenida'));
         }
+        return back()->withErrors([
+            'email' => 'El email proporcionado es incorrecto.'
+        ])->onlyInput('email');
+    }
 
+    public function usuariologout (Request $request)
+    {
+        Auth::guard('usuarios')->logout();
+
+        $request->session()->invalidate();
+        return redirect()->route(''); //aqui que agregamos xd 
     }
 }
