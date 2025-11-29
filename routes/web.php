@@ -19,6 +19,8 @@ Route::resource('pago',PagoController::class);
 Route::resource('pivote_stock_carrito',PivoteStockCarritoController::class);
 Route::resource('stock',StockController::class);
 Route::resource('usuario', UsuarioController::class);
+Route::post('/usuario-login', [UsuarioController::class,'usuariologin'])->name('usuario.login');
+Route::get('/usuario-login-vista',[UsuarioController::class,'obtenerVista'])->name('usuario-login-vista');
 
 Route::view('\bienvenida','landing')->name('bienvenida');
 
