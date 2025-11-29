@@ -77,7 +77,8 @@ class UsuarioController extends Controller
      */
     public function destroy(Usuario $usuario)
     {
-        //
+        $usuario->delete();
+        return redirect()->route('bienvenida');
     }
 
     public function obtenerVista()
@@ -104,6 +105,21 @@ class UsuarioController extends Controller
         Auth::guard('usuarios')->logout();
 
         $request->session()->invalidate();
-        return redirect()->route(''); //aqui que agregamos xd 
+        return redirect()->route(''); //ruta a implementar 
     }
+
+    public function recuperarUsuario($id)
+    {
+        $usuario = Usuario::onlyTrashed()->find($id);
+        $usuario->restore();
+        return redirect()->route(''); //ruta a implementar
+    }
+
+     public function borrarUsuario($id)
+    {
+        $usuario = Usuario::onlyTrashed()->find($id);
+        $usuario->forceDelete();
+        return redirect()->route(''); //ruta a implementar
+    }
+    
 }
