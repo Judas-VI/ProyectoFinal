@@ -57,9 +57,9 @@
 					@endphp
 					<tr>
 						<td>{{ $stock->nombre_stock ?? 'Producto' }}</td>
-						<td class="text-end">{{ number_format($precio, 2) }} €</td>
+						<td class="text-end">{{ number_format($precio, 2) }} $</td>
 						<td class="text-center">{{ $cantidad }}</td>
-						<td class="text-end">{{ number_format($subtotal, 2) }} €</td>
+						<td class="text-end">{{ number_format($subtotal, 2) }} $</td>
 						<td class="text-center">
 							<form action="{{ route('pivote_stock_carrito.destroy', $stock->pivot->id ?? null) }}" method="POST" onsubmit="return confirm('¿Eliminar este producto del carrito?');" style="display:inline;">
 								@csrf
@@ -74,7 +74,7 @@
 				<tfoot>
 					<tr>
 					<th colspan="3" class="text-end">Total</th>
-					<th class="text-end">{{ number_format($total ?? 0, 2) }} €</th>
+					<th class="text-end">{{ number_format($total ?? 0, 2) }} $</th>
 					<th></th>
 					</tr>
 				</tfoot>
@@ -82,7 +82,7 @@
 		</div>
 
 		<div class="d-flex gap-2">
-			<a href="{{ url('/menu') }}" class="btn btn-secondary">Regresar al menú</a>
+			<a href="{{ url('/#') }}" class="btn btn-secondary">Regresar al menú</a>
 			@php $primerCarrito = $carritos->first(); @endphp
 			<a href="{{ route('carrito.show', $primerCarrito->id) }}" title="{{ route('carrito.show', $primerCarrito->id) }}" class="btn btn-primary">Ir a pagar</a>
 		</div>
@@ -113,16 +113,16 @@
 							@endphp
 							<tr>
 								<td>{{ $stock->nombre_stock ?? 'Producto' }}</td>
-								<td class="text-end">{{ number_format($precio, 2) }} €</td>
+								<td class="text-end">{{ number_format($precio, 2) }} $</td>
 								<td class="text-center">{{ $cantidad }}</td>
-								<td class="text-end">{{ number_format($subtotal, 2) }} €</td>
+								<td class="text-end">{{ number_format($subtotal, 2) }} $</td>
 							</tr>
 						@endforeach
 					</tbody>
 					<tfoot>
 						<tr>
 						<th colspan="3" class="text-end">Total</th>
-						<th class="text-end">{{ number_format($total ?? 0, 2) }} €</th>
+						<th class="text-end">{{ number_format($total ?? 0, 2) }} $</th>
 						<th></th>
 						</tr>
 					</tfoot>
@@ -130,7 +130,7 @@
 			</div>
 
 			<div class="d-flex gap-2">
-				<a href="{{ url('/menu') }}" class="btn btn-secondary">Regresar al menú</a>
+				<a href="{{ url('/#') }}" class="btn btn-secondary">Regresar al menú</a>
 				<a href="{{ route('pago.generar.pdf') }}" title="{{ route('pago.generar.pdf') }}" class="btn btn-primary">Ir a pagar</a>
 			</div>
 		@else

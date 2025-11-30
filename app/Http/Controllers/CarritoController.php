@@ -270,7 +270,7 @@ class CarritoController extends Controller
     {
         DB::beginTransaction();
         try {
-            // restaurar stock de cada item antes de eliminar
+            
             foreach ($carrito->stocks()->get() as $s) {
                 $stock = Stock::find($s->id);
                 if ($stock) {
