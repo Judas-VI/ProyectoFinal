@@ -3,6 +3,18 @@
 
     <div class="container pt-5 pb-5">
         <h1 class="text-center mb-5">Inventario de Stock</h1>
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
             @foreach ($stocks as $stock)
@@ -36,20 +48,30 @@
                             </ul>
                             
                             <div class="mt-auto d-grid">
+                                {{-- Formulario para añadir al carrito (disponible para usuarios autenticados y visitantes) --}}
+                                <form action="{{ route('carrito.agregar.usuario') }}" method="POST" class="d-flex gap-2 mb-2">
+                                    @csrf
+                                    <input type="hidden" name="stock_id" value="{{ $stock->id }}">
+                                    <input type="hidden" name="precio" value="{{ $stock->precio }}">
+                                    <input type="number" name="cantidad" value="1" min="1" class="form-control" style="width:80px;">
+                                    <button type="submit" class="btn btn-primary" @if($stock->stock <= 0) disabled @endif>
+                                        Añadir al carrito
+                                    </button>
+                                </form>
+
                                 <a href="{{ route('stock.edit', $stock->id) }}" class="btn btn-dark">Editar</a>
-                                <form class="mt-auto d-grid" action="{{ route('stock.destroy', $stock->id) }}" method="POST">
+                                <form class="mt-2" action="{{ route('stock.destroy', $stock->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger" type="submit">Eliminar</button>
+                                    <button class="btn btn-danger w-100" type="submit">Eliminar</button>
                                 </form>
-                                <a href="{{ route('stock.show', $stock->id) }}" class="btn btn-dark">Ver Detalles</a>
+                                <a href="{{ route('stock.show', $stock->id) }}" class="btn btn-dark mt-2">Ver Detalles</a>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
             </div>
-        
         @unless (count($stocks))
             <p class="d-flex justify-content-center align-items-start pt-5 min-vh-100 p-3">Aún no hay productos en stock. 
             </p>
