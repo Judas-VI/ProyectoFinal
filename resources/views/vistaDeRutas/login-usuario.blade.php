@@ -10,7 +10,7 @@
                 id="email" 
                 name="email"
                 value="{{ old('email') }}"
-                required>
+                required maxlength="255" autocomplete="email">
             @error('email')
                 <p class="text-danger">{{$message}}</p>
             @enderror
@@ -21,7 +21,7 @@
                 type="password" 
                 name="password" 
                 id="password"
-                required>
+                    required>
             @error('password')
                 <p class="text-danger">{{$message}}</p>
             @enderror

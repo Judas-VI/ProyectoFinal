@@ -104,7 +104,7 @@ class CarritoController extends Controller
     }
 
     /**
-     * Agregar un stock al carrito y se actualiza si existe
+     * Agregar un stock al carrito y se actualiza 
      */
     public function agregar(Request $request, Carrito $carrito)
     {
