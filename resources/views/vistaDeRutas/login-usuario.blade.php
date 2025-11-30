@@ -21,7 +21,7 @@
                 type="password" 
                 name="password" 
                 id="password"
-                required>
+                    required>
             @error('password')
                 <p class="text-danger">{{$message}}</p>
             @enderror
