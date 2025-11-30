@@ -1,4 +1,6 @@
 <div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
     <nav class="navbar navbar-expand-lg bg-black">
         <div class="container">
             <!--Logo-->
@@ -16,6 +18,9 @@
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li>    
+                            <a class="nav-link" href="/carrito"><i class="bi bi-cart"></i></a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ route('bienvenida') }}">Inicio</a>
                         </li>
