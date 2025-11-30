@@ -104,6 +104,48 @@ class CarritoController extends Controller
     }
 
     /**
+     * Agregar un stock al carrito y se actualiza si existe
+     */
+    public function agregar(Request $request, Carrito $carrito)
+    {
+        $data = $request->validate([
+            'stock_id' => 'required|integer|exists:stocks,id',
+            'cantidad' => 'required|integer|min:1',
+            'precio' => 'nullable|numeric',
+        ]);
+
+        $stock = \App\Models\Stock::find($data['stock_id']);
+        if (! $stock) {
+            return back()->withErrors(['stock_id' => 'Producto no encontrado.']);
+        }
+
+        if ($stock->stock < $data['cantidad']) {
+            return back()->withErrors(['cantidad' => 'No hay suficiente stock disponible.']);
+        }
+
+        $precio = $data['precio'] ?? $stock->precio;
+
+        $existing = $carrito->stocks()->where('stocks.id', $stock->id)->first();
+
+        if ($existing) {
+            $newCantidad = $existing->pivot->cantidad + $data['cantidad'];
+            $carrito->stocks()->updateExistingPivot($stock->id, ['cantidad' => $newCantidad, 'precio' => $precio]);
+        } else {
+            $carrito->stocks()->attach($stock->id, ['cantidad' => $data['cantidad'], 'precio' => $precio]);
+        }
+
+        //poner el precio
+        $total = 0;
+        foreach ($carrito->stocks()->get() as $s) {
+            $total += $s->pivot->precio * $s->pivot->cantidad;
+        }
+        $carrito->total_precio = $total;
+        $carrito->save();
+
+        return back()->with('success', 'Producto agregado al carrito.');
+    }
+
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Carrito $carrito)

@@ -96,10 +96,17 @@ class StockController extends Controller
      */
     public function destroy(Stock $stock)
     {
-        if ($stock->img) {
-            Storage::disk('public')->delete($stock->img);
+        try {
+            if ($stock->img) {
+                Storage::disk('public')->delete($stock->img);
+            }
+            // quitar relaciones en la tabla pivote pa no tener errores de llave foranea y luego eliminar muejjejeejejeje
+            $stock->carritos()->detach();
+
+            $stock->delete();
+            return redirect()->route('stock.index')->with('success', 'Producto eliminado con éxito.');
+        } catch (\Exception $e) {
+            return redirect()->route('stock.index')->withErrors(['error' => 'No se pudo eliminar el producto: ' . $e->getMessage()]);
         }
-        $stock->delete();
-        return redirect()->route('stock.index')->with('success', 'Producto de stock eliminado con éxito.');
     }
 }

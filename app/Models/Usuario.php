@@ -20,4 +20,9 @@ class Usuario extends Authenticatable
         'password',
     ];
 
+    public function carritos()
+    {
+        return $this->hasMany(\App\Models\Carrito::class, 'usuario_id');
+    }
+
 }

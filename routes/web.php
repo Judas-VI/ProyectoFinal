@@ -9,12 +9,33 @@ use App\Models\Pivote_stock_carrito;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+Route::get('/pdfejemplo', function () {
+    $pdf = Pdf::loadView('PDF.pdf');
+
+    return $pdf->stream('archivo.pdf'); // para mostrar en el navegador
+    // return $pdf->download('archivo.pdf'); para descargar el archivo
+});
+
+Route::get('/pdf-usuario', function () {
+    $usuario = [
+        'nombre' => 'David',
+        'edad' => 21
+        ///CAMBIAR POR DATOS DESPUES
+    ];
+
+    $pdf = Pdf::loadView('pdf.ejemplo', compact('usuario'));
+
+    return $pdf->download('usuario.pdf');
+});
 
 Route::get('/', function () {
     return view('landing');
 })->name('home');
 
 Route::resource('carrito',CarritoController::class);
+Route::post('carrito/{carrito}/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
 Route::resource('pago',PagoController::class);
 Route::resource('pivote_stock_carrito',PivoteStockCarritoController::class);
 Route::resource('stock',StockController::class);
