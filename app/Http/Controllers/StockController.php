@@ -109,4 +109,5 @@ class StockController extends Controller
             return redirect()->route('stock.index')->withErrors(['error' => 'No se pudo eliminar el producto: ' . $e->getMessage()]);
         }
     }
+
 }

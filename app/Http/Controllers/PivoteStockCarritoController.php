@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pivote_stock_carrito;
+use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PivoteStockCarritoController extends Controller
 {
@@ -60,11 +62,20 @@ class PivoteStockCarritoController extends Controller
      */
     public function destroy(Pivote_stock_carrito $pivote_stock_carrito)
     {
-        // Eliminar la fila  que relaciona un stock con un carrito por id  
+        // Eliminar la fila que relaciona un stock con un carrito por id
+        DB::beginTransaction();
         try {
+            $stock = Stock::find($pivote_stock_carrito->stock_id);
+            if ($stock) {
+                $stock->stock = $stock->stock + ($pivote_stock_carrito->cantidad ?? 0);
+                $stock->save();
+            }
+
             $pivote_stock_carrito->delete();
+            DB::commit();
             return back()->with('success', 'Producto eliminado del carrito.');
         } catch (\Exception $e) {
+            DB::rollBack();
             return back()->withErrors(['error' => 'No se pudo eliminar el producto del carrito.']);
         }
     }

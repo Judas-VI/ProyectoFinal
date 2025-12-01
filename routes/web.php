@@ -12,12 +12,27 @@ use Livewire\Volt\Volt;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::get('/pdfejemplo', function () {
-    $pdf = Pdf::loadView('PDF.pdf');
+    // Datos de ejemplo para mostrar el ticket
+    $items = [
+        ['name' => 'Camisa deportiva', 'qty' => 1, 'price' => 199.99],
+        ['name' => 'Pantalón', 'qty' => 2, 'price' => 89.50],
+        ['name' => 'Calcetines', 'qty' => 3, 'price' => 5.00],
+    ];
 
-    return $pdf->stream('archivo.pdf'); // para mostrar en el navegador
+    $pdf = Pdf::loadView('PDF.pdf', [
+        'items' => $items,
+        'orderId' => 'TCK-1001',
+        'date' => date('d/m/Y H:i'),
+        'storeName' => 'Tienda Ejemplo',
+        'storeAddress' => 'Av. Central 10',
+        'storePhone' => '555-1234',
+        'tax' => 0,
+    ]);
+
+    return $pdf->stream('ticket.pdf'); // para mostrar en el navegador
     // return $pdf->download('archivo.pdf'); para descargar el archivo
 });
-
+/* 
 Route::get('/pdf-usuario', function () {
     $usuario = [
         'nombre' => 'David',
@@ -29,6 +44,7 @@ Route::get('/pdf-usuario', function () {
 
     return $pdf->download('usuario.pdf');
 });
+*/
 
 Route::get('/', function () {
     return view('landing');
@@ -36,6 +52,10 @@ Route::get('/', function () {
 
 Route::resource('carrito',CarritoController::class);
 Route::post('carrito/{carrito}/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
+Route::post('carrito/agregar-usuario', [CarritoController::class, 'agregarAlUsuario'])
+    ->name('carrito.agregar.usuario');
+// Ruta específica para generar PDF debe registrarse antes del resource
+Route::get('pago/generar-pdf', [PagoController::class, 'generarPdf'])->name('pago.generar.pdf');
 Route::resource('pago',PagoController::class);
 Route::resource('pivote_stock_carrito',PivoteStockCarritoController::class);
 Route::resource('stock',StockController::class);

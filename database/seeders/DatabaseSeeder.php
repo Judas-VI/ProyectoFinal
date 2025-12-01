@@ -48,5 +48,8 @@ class DatabaseSeeder extends Seeder
 
             $carrito->update(['total_precio' => $total]);
         }
+
+        // Assign real images from database/seeders/imagenes to the created stocks
+        $this->call(StockImageSeeder::class);
     }
 }
