@@ -78,4 +78,52 @@
         @endunless
 
     </div>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+        (function(){
+            const selectAll = document.getElementById('select-all-stocks');
+            const deleteBtn = document.getElementById('delete-selected');
+
+
+            if (selectAll) {
+                selectAll.addEventListener('change', function(e){
+                    const checked = e.target.checked;
+                    document.querySelectorAll('.select-stock').forEach(cb => cb.checked = checked);
+                });
+            }
+
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', function(e){
+                    e.preventDefault();
+                    const selected = Array.from(document.querySelectorAll('.select-stock:checked')).map(i => i.value);
+                    if (!selected.length) {
+                        alert('No hay productos seleccionados.');
+                        return;
+                    }
+                    if (!confirm('¿Eliminar los productos seleccionados? Esta acción no se puede deshacer.')) return;
+
+                    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                    fetch(routeBulk, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token,
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ ids: selected })
+                    }).then(res => {
+                        if (res.ok) return res.json().catch(() => ({}));
+                        return res.json().then(err => Promise.reject(err));
+                    }).then(() => {
+                        // recargar para reflejar cambios
+                        window.location.reload();
+                    }).catch(err => {
+                        console.error(err);
+                        alert('Ocurrió un error al eliminar. Revisa la consola.');
+                    });
+                });
+            }
+        })();
+    </script>
 </x-layaout>

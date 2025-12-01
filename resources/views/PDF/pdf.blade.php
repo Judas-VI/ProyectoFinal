@@ -88,32 +88,6 @@
     </div>
 </div>
 </body>
-</html>
-En eso ahí yo llego y me prendo un gran leño
-En lo que me alucino siento que estoy en un sueño
-Mi mente se vacía en lo que llego a la esquina
-Me meto a la tienda pa' pedir unas pastillas
-Le digo al tendero mejor sácame el dinero
-Si no me haces caso de seguro aquí te enfierro
-Se la anda de guerrero en lo que yo forcejeo
-Le doy tres puñaladas al pinche anciano culero
-Abro la caja fuerte y tomo todo lo que puedo
-Sabía que los vecinos ya estaban poniendo dedo
-No corrí ni tres cuadras cuando una pixelieada
-Me para y entre los guachos me agarran a patadas
-Ahora estoy en prisión y ya no recuerdo nada
-Lo último que escuche fue
-Chido, camarada
-El diablo anda suelto
-Va pisando el mismo pavimento
-Recorriendo el barrio por completo
-Igual y me la fleto, si es que me lo topo
-Como quiera, los dos estamos igual de locos
-El diablo anda suelto
-Va pisando el mismo pavimento
-Recorriendo el barrio por completo
-Igual y me la fleto, si es que me lo topo
-Como quiera, los dos estamos igual de locos</h3>
-    <p>Este PDF fue generado con Laravel.</p>
+
 </body>
 </html>

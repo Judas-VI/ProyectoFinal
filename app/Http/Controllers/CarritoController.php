@@ -213,6 +213,9 @@ class CarritoController extends Controller
         return redirect()->route('carrito.index')->with('success', 'Producto agregado al carrito del usuario.');
     }
 
+
+
+
     /**
      * Agregar producto al carrito
      */
