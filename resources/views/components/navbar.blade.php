@@ -28,10 +28,10 @@
                             <a class="nav-link" href="#about">About</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="#service">Service</a>
+                            <a class="nav-link" href="#service">Contact</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="#contact">Contact</a>
+                            <a class="nav-link" href="{{ route('usuario.logout') }}">Logout</a>
                         </li>
 
                     </ul>

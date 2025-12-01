@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 //use Illuminate\Container\Attributes\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-
+use PhpParser\Node\Expr\FuncCall;
 
 class UsuarioController extends Controller
 {
@@ -44,9 +44,9 @@ class UsuarioController extends Controller
         ]);
         $validarDatos['password'] = Hash::make($validarDatos['password']);
         $usuario = Usuario::create($validarDatos);
+        Auth::login($usuario);
 
-        return redirect()->route('bienvenida')->with('message','Completado');
-
+        return redirect()->route('bienvenida');
     }
 
     /**
@@ -103,12 +103,19 @@ class UsuarioController extends Controller
 
     public function usuariologout (Request $request)
     {
-        Auth::guard('usuarios')->logout();
+        //Auth::guard('usuarios')->logout();
+
+        Auth::logout();
 
         $request->session()->invalidate();
-        return redirect()->route(''); //ruta a implementar 
+        $request->session()->regenerateToken();
+        return redirect()->route('bienvenida'); //ruta a implementar 
     }
 
+   // public function usuariout()
+    //{
+     //   return redirect()->route('bienvenida');
+   // }
     public function recuperarUsuario($id)
     {
         $usuario = Usuario::onlyTrashed()->find($id);
@@ -123,4 +130,8 @@ class UsuarioController extends Controller
         return redirect()->route(''); //ruta a implementar
     }
     
+    public function pruebaAdmin()
+    {
+        return view('pruebaAdmin.pruebaAdmin');
+    }
 }

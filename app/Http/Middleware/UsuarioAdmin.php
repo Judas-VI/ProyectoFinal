@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Usuario;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +17,9 @@ class UsuarioAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check() && Auth::user()->usuario->id == 1)
-        {
+        if(Auth::check() && Auth::user()->is_admin == true){
             return $next($request);
         }
-        
-        abort(404, 'Direccion no encontrada.');
+        abort(403, 'Direccion no encontrada.');
     }
 }
