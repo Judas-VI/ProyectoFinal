@@ -129,9 +129,11 @@
                         </div>
 
 		<div class="d-flex gap-2">
-			<a href="{{ url('/#') }}" class="btn btn-secondary">Regresar al menú</a>
-			@php $primerCarrito = $carritos->first(); @endphp
-			<a href="{{ route('carrito.show', $primerCarrito->id) }}" title="{{ route('carrito.show', $primerCarrito->id) }}" class="btn btn-primary">Ir a pagar</a>
+			
+            @php $primerCarrito = $carritos->first(); @endphp
+            @if(!empty($primerCarrito))
+            @else
+            @endif
 		</div>
 		@elseif(!empty($articulosSesion) && count($articulosSesion) > 0)
 			<div class="table-responsive">
@@ -196,17 +198,9 @@
                     @endif
                 </div>
 
-			<div class="d-flex gap-2">
-				<a href="{{ url('/stock') }}" class="btn btn-secondary">Regresar al stock</a>
-				<a href="{{ route('pago.generar.pdf') }}" title="{{ route('pago.generar.pdf') }}" class="btn btn-primary">Ir a pagar</a>
-			</div>
-		@else
-			<div class="card">
-				<div class="card-body text-center">
-				<p class="mb-3">Tu carrito está vacío.</p>
-				<a href="{{ url('/#') }}" class="btn btn-primary">Ir al menú</a>
-				</div>
-			</div>
-		@endif
+            <div class="d-flex gap-2">
+                <a href="{{ url('/stock') }}" class="btn btn-secondary">Regresar al stock</a>
+                <a href="{{ route('pago.generar.pdf') }}" title="{{ route('pago.generar.pdf') }}" class="btn btn-primary">Ir a pagar</a>
+            </div>
 	</div>
 </x-layaout>
