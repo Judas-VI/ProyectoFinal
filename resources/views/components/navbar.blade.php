@@ -18,22 +18,14 @@
                 </div>
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <li>    
-                            <a class="nav-link" href="/carrito"><i class="bi bi-cart"></i></a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{ route('bienvenida') }}">Inicio</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="#about">About</a>
+                            <a class="nav-link" href="{{ url('/stock') }}">Productos</a>
                         </li>
                         <li class="nav-item mx-2">
-                            <a class="nav-link" href="#service">Service</a>
-                        </li>
-                        <li class="nav-item mx-2">
-                            <a class="nav-link" href="#contact">Contact</a>
-                        </li>
-
+                            <a class="nav-link active" href="{{ url('/carrito') }}"><i class="bi bi-cart"></i>carrito</a>
                     </ul>
                     <!--Login-->
                     <div class="d-flex flex-colum  justify-content-center aling-items-center gap-3">
