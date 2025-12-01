@@ -95,6 +95,7 @@
 						<th class="text-end">Precio</th>
 						<th class="text-center">Cantidad</th>
 						<th class="text-end">Subtotal</th>
+						<th class="text-center">Acciones</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -116,6 +117,13 @@
 								<td class="text-end">{{ number_format($precio, 2) }} $</td>
 								<td class="text-center">{{ $cantidad }}</td>
 								<td class="text-end">{{ number_format($subtotal, 2) }} $</td>
+								<td class="text-center">
+									<form action="{{ route('carrito.guest.remove') }}" method="POST" onsubmit="return confirm('¿Eliminar este producto del carrito?');" style="display:inline;">
+										@csrf
+										<input type="hidden" name="stock_id" value="{{ $item['stock_id'] }}">
+										<button class="btn btn-sm btn-danger" type="submit">Eliminar</button>
+									</form>
+								</td>
 							</tr>
 						@endforeach
 					</tbody>
