@@ -54,6 +54,7 @@ Route::resource('carrito',CarritoController::class);
 Route::post('carrito/{carrito}/agregar', [CarritoController::class, 'agregar'])->name('carrito.agregar');
 Route::post('carrito/agregar-usuario', [CarritoController::class, 'agregarAlUsuario'])
     ->name('carrito.agregar.usuario');
+Route::post('carrito/guest/remove', [CarritoController::class, 'removeGuestItem'])->name('carrito.guest.remove');
 // Ruta específica para generar PDF debe registrarse antes del resource
 Route::get('pago/generar-pdf', [PagoController::class, 'generarPdf'])->name('pago.generar.pdf');
 Route::resource('pago',PagoController::class);

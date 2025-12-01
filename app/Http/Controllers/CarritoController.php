@@ -214,6 +214,48 @@ class CarritoController extends Controller
     }
 
 
+    public function removeGuestItem(Request $request)
+    {
+        $data = $request->validate([
+            'stock_id' => 'required|integer|exists:stocks,id',
+        ]);
+
+        $stock = Stock::find($data['stock_id']);
+        $guestCart = session()->get('guest_carrito', []);
+        $foundIndex = null;
+        $cantidad = 0;
+
+        foreach ($guestCart as $i => $item) {
+            if (($item['stock_id'] ?? null) == $stock->id) {
+                $foundIndex = $i;
+                $cantidad = $item['cantidad'] ?? 0;
+                break;
+            }
+        }
+
+        if ($foundIndex === null) {
+            return back()->withErrors(['error' => 'Producto no encontrado en carrito de sesión.']);
+        }
+
+        DB::beginTransaction();
+        try {
+            if ($stock) {
+                $stock->stock = $stock->stock + ($cantidad ?? 0);
+                $stock->save();
+            }
+
+            array_splice($guestCart, $foundIndex, 1);
+            session()->put('guest_carrito', $guestCart);
+
+            DB::commit();
+            return back()->with('success', 'Producto eliminado del carrito (invitado).');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'No se pudo eliminar el producto del carrito: ' . $e->getMessage()]);
+        }
+    }
+
+
 
 
     /**
@@ -221,9 +263,7 @@ class CarritoController extends Controller
      */
     // Guest-cart functionality removed: users must be authenticated to use cart features.
 
-    /**
-     * Método reutilizable que adjunta un stock al carrito y recalcula el total.
-     */
+ 
     private function adjuntarStockAlCarrito(Carrito $carrito, array $data)
     {
         $stock = Stock::find($data['stock_id']);
