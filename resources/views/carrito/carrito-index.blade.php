@@ -138,7 +138,7 @@
 			</div>
 
 			<div class="d-flex gap-2">
-				<a href="{{ url('/') }}" class="btn btn-secondary">Regresar al stock</a>
+				<a href="{{ url('/stock') }}" class="btn btn-secondary">Regresar al stock</a>
 				<a href="{{ route('pago.generar.pdf') }}" title="{{ route('pago.generar.pdf') }}" class="btn btn-primary">Ir a pagar</a>
 			</div>
 		@else
