@@ -42,6 +42,7 @@ Route::resource('stock',StockController::class);
 Route::resource('usuario', UsuarioController::class);
 Route::post('/usuario-login', [UsuarioController::class,'usuariologin'])->name('usuario.login');
 Route::get('/usuario-login-vista',[UsuarioController::class,'obtenerVista'])->name('usuario-login-vista');
+Route::get('/usuario-admin', [UsuarioController::class,'pruebaAdmin'])->name('prueba-admin');
 
 Route::view('\bienvenida','landing')->name('bienvenida');
 

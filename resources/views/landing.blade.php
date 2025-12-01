@@ -10,6 +10,13 @@
       </a>
     </div>
   </class>
+  @php
+    if (session()) {
+      if (session('message') == 'Completado') {
+        echo 'Usuario realizado ++';
+      }
+    }  
+  @endphp
 </x-layaout>
 <style>
 

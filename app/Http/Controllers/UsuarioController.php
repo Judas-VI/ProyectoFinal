@@ -45,7 +45,8 @@ class UsuarioController extends Controller
         $validarDatos['password'] = Hash::make($validarDatos['password']);
         $usuario = Usuario::create($validarDatos);
 
-        return redirect()->route('bienvenida');
+        return redirect()->route('bienvenida')->with('message','Completado');
+
     }
 
     /**

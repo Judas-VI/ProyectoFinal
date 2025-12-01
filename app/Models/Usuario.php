@@ -22,7 +22,7 @@ class Usuario extends Authenticatable
 
     public function carritos()
     {
-        return $this->hasMany(\App\Models\Carrito::class, 'usuario_id');
+        return $this->hasMany(Carrito::class, 'usuario_id');
     }
 
 }
