@@ -196,7 +196,17 @@
                     @endif
                 </div>
 
-            </div>
-        </div>
-    </div>
+			<div class="d-flex gap-2">
+				<a href="{{ url('/stock') }}" class="btn btn-secondary">Regresar al stock</a>
+				<a href="{{ route('pago.generar.pdf') }}" title="{{ route('pago.generar.pdf') }}" class="btn btn-primary">Ir a pagar</a>
+			</div>
+		@else
+			<div class="card">
+				<div class="card-body text-center">
+				<p class="mb-3">Tu carrito está vacío.</p>
+				<a href="{{ url('/#') }}" class="btn btn-primary">Ir al menú</a>
+				</div>
+			</div>
+		@endif
+	</div>
 </x-layaout>

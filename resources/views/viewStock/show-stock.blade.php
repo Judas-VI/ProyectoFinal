@@ -35,7 +35,11 @@
                                 <small class="text-muted">Creado: {{ $stock->fecha_creacion }}</small>
                             </li>
                         </ul>
-                        
+                        <div class="mt-3 d-flex">
+                            <a href="{{ url()->previous() }}" class="btn btn-outline-secondary">
+                                &larr; Regresar al stock
+                            </a>
+                        </div>
                         </div>
                 </div>
             </div>

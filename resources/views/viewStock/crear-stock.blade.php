@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-center align-items-start pt-5 min-vh-100 p-3 w-100 ">
         <div class="card p-4 shadow-lg col-11 col-sm-10 col-md-8 col-lg-7 col-xl-6">
 
-            <h1 class="text-center mb-4">Nueva Stock</h1>
+            <h1 class="text-center mb-4">Nuevo Stock</h1>
 
             <form action="{{ route('stock.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -28,7 +28,7 @@
 
                 <div class="row mb-3 align-items-center">
                     <div class="col-md-4">
-                        <label class="col-form-label text-md-end" for="nombre_stock">Nombre de Stock:</label>
+                        <label class="col-form-label text-md-end" for="nombre_stock">Nombre del producto:</label>
                     </div>
                     <div class="col-md-8">
                         <input class="form-control form-control-lg @error('nombre_stock') is-invalid @enderror"
